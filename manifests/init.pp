@@ -27,7 +27,9 @@
 #     along with the apaxy Puppet module.  If not, see <http://www.gnu.org/licenses/>.
 
 # [Remember: No empty lines between comments and class definition]
-class apaxy {
+class apaxy (
+  $docroot = undef
+){
 
 
 }
