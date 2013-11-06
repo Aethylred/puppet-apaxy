@@ -1,6 +1,6 @@
-# blank-blank
+# apaxy
 
-This is a blank-blank puppet module.
+This is a apaxy puppet module.
 
 # Licensing
 
@@ -32,10 +32,10 @@ This will require a copy of the original input files to `spec/fixtures/augeas` u
 
 [![GPL3](http://www.gnu.org/graphics/gplv3-127x51.png)]](http://www.gnu.org/licenses)
 
-This file is part of the blank-blank Puppet module.
+This file is part of the apaxy Puppet module.
 
-The blank-blank Puppet module is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+The apaxy Puppet module is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-The blank-blank Puppet module is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+The apaxy Puppet module is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with the blank-blank Puppet module.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License along with the apaxy Puppet module.  If not, see <http://www.gnu.org/licenses/>.
