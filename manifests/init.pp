@@ -28,8 +28,25 @@
 
 # [Remember: No empty lines between comments and class definition]
 class apaxy (
-  $docroot = undef
-){
+  $install_dir  = $apaxy::params::install_dir,
+  $source       = $apaxy::params::source,
+  $revision     = 'master'
+) inherits apaxy::params {
 
+  $theme_dir = "${install_dir}/apaxy/theme"
+
+  vcsrepo{'apaxy':
+    ensure    => 'present',
+    provider  => 'git',
+    path      => $install_dir,
+    source    => $source,
+    revision  => $revision,
+  }
+
+  file{'apaxy_theme_dir':
+    ensure  => directory,
+    path    => $theme_dir,
+    require => Vcsrepo['apaxy']
+  }
 
 }
