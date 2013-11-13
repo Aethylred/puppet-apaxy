@@ -1,0 +1,77 @@
+#
+# Apaxy by @adamwhitcroft
+#
+# For a full breakdown of the mod_autoindex module:
+# http://apache.org/docs/2.2/mod/mod_autoindex.html
+#
+
+	# ENABLE INDEXING
+	Options +Indexes
+
+	# INDEX OPTIONS
+	IndexOptions +Charset=UTF-8 +FancyIndexing +IgnoreCase +FoldersFirst +XHTML +HTMLTable +SuppressRules +SuppressDescription +NameWidth=*
+
+	# HIDE /theme DIRECTORY
+	IndexIgnore .htaccess /theme
+
+#
+# GENERAL ICONS (BLANK, DIRECTORY, PARENT DIRECTORY)
+#
+
+#
+# Replace {FOLDERNAME} with your directory URL eg:
+# If your directory is http://mywebsite.com/share/
+# you would change to:
+#
+# AddIcon /share/{FOLDERNAME}/theme/icons/blank.png ^^BLANKICON^^
+#
+
+	AddIcon <%= @directory %>/theme/icons/blank.png ^^BLANKICON^^
+	AddIcon <%= @directory %>/theme/icons/folder.png ^^DIRECTORY^^
+	AddIcon <%= @directory %>/theme/icons/folder-home.png ..
+
+#
+# EXTENSION SPECIFIC ICONS
+#
+
+	AddIcon <%= @directory %>/theme/icons/audio.png .aif .iff .m3u .m4a .mid .mp3 .mpa .ra .wav .wma .f4a .f4b .oga .ogg
+	AddIcon <%= @directory %>/theme/icons/bin.png .bin
+	AddIcon <%= @directory %>/theme/icons/c.png .c
+	AddIcon <%= @directory %>/theme/icons/calc.png .xlsx .xlsm .xltx .xltm .xlam .xlr .xls .csv
+	AddIcon <%= @directory %>/theme/icons/css.png .css
+	AddIcon <%= @directory %>/theme/icons/deb.png .deb
+	AddIcon <%= @directory %>/theme/icons/doc.png .doc .docx .docm .dot .dotx .dotm .log .msg .odt .pages .rtf .tex .wpd .wps
+	AddIcon <%= @directory %>/theme/icons/draw.png .svg
+	AddIcon <%= @directory %>/theme/icons/eps.png .ai .eps
+	AddIcon <%= @directory %>/theme/icons/gif.png .gif
+	AddIcon <%= @directory %>/theme/icons/html.png .html .xhtml .shtml .htm
+	AddIcon <%= @directory %>/theme/icons/ico.png .ico
+	AddIcon <%= @directory %>/theme/icons/java.png .jar
+	AddIcon <%= @directory %>/theme/icons/jpg.png .jpg .jpeg
+	AddIcon <%= @directory %>/theme/icons/js.png .js .json
+	AddIcon <%= @directory %>/theme/icons/markdown.png .md
+	AddIcon <%= @directory %>/theme/icons/package.png .pkg .dmg
+	AddIcon <%= @directory %>/theme/icons/pdf.png .pdf
+	AddIcon <%= @directory %>/theme/icons/php.png .php .phtml
+	AddIcon <%= @directory %>/theme/icons/png.png .png
+	AddIcon <%= @directory %>/theme/icons/ps.png .ps
+	AddIcon <%= @directory %>/theme/icons/psd.png .psd
+	AddIcon <%= @directory %>/theme/icons/rar.png .rar
+	AddIcon <%= @directory %>/theme/icons/rb.png .rb
+	AddIcon <%= @directory %>/theme/icons/rpm.png .rpm
+	AddIcon <%= @directory %>/theme/icons/rss.png .rss
+	AddIcon <%= @directory %>/theme/icons/sql.png .sql
+	AddIcon <%= @directory %>/theme/icons/tiff.png .tiff
+	AddIcon <%= @directory %>/theme/icons/text.png .txt .nfo
+	AddIcon <%= @directory %>/theme/icons/video.png .asf .asx .avi .flv .mkv .mov .mp4 .mpg .rm .srt .swf .vob .wmv .m4v .f4v .f4p .ogv
+	AddIcon <%= @directory %>/theme/icons/xml.png .xml
+	AddIcon <%= @directory %>/theme/icons/zip.png .zip
+	DefaultIcon <%= @directory %>/theme/icons/default.png
+
+#
+# THEME FILES
+#
+
+	HeaderName <%= @directory %>/theme/header.html
+	ReadmeName <%= @directory %>/theme/footer.html
+	IndexStyleSheet "<%= @directory %>/theme/style.css"

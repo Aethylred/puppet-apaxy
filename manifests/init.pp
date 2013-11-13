@@ -49,4 +49,11 @@ class apaxy (
     require => Vcsrepo['apaxy']
   }
 
+  file{'apaxy_theme_htaccess':
+    ensure  => file,
+    path    => "${theme_dir}/.htaccess",
+    content => 'Options -Indexes',
+    require => File['apaxy_theme_dir'],
+  }
+
 }

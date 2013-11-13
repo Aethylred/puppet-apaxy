@@ -12,5 +12,11 @@
 #
 #     You should have received a copy of the GNU General Public License
 #     along with the apaxy Puppet module.  If not, see <http://www.gnu.org/licenses/>.
-include apache
+class{'apache':
+  default_vhost     => false,
+  default_ssl_vhost => true,
+}
 include apaxy
+apaxy::theme{'test':
+  manage_vhost => true,
+}
