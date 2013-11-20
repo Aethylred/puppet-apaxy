@@ -10,4 +10,4 @@ project_page 'https://github.com/Aethylred/puppet-apaxy'
 ## Add dependencies, if any:
 # dependency 'username/name', '>= 1.2.0'
 dependency 'puppetlabs/apache', '>= 0.9.0'
-dependency 'puppetlabs/vcsrepo', '>= 0.1.2'
+dependency 'puppetlabs/vcsrepo', '>= 0.2.0'

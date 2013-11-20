@@ -1,5 +1,7 @@
 # apaxy
 
+[![Build Status](https://travis-ci.org/Aethylred/puppet-apaxy.png?branch=master)](https://travis-ci.org/Aethylred/puppet-apaxy)
+
 This is a apaxy puppet module.
 
 # Licensing
