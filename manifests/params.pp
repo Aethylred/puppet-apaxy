@@ -9,6 +9,8 @@ class apaxy::params {
   $install_dir  = '/var/opt/apaxy'
   $source       = 'https://github.com/AdamWhitcroft/Apaxy.git'
 
+  # OS check does nothing and redundant as Apache catches all the
+  # required cases.
   case $::osfamily {
     Debian:{
 

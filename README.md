@@ -2,13 +2,90 @@
 
 [![Build Status](https://travis-ci.org/Aethylred/puppet-apaxy.png?branch=master)](https://travis-ci.org/Aethylred/puppet-apaxy)
 
-This is a apaxy puppet module.
+This Puppet module installs and configures a HTTP file directory with the [Apaxy](http://adamwhitcroft.com/apaxy/) theme.
 
-# Licensing
+# Usage
 
-Update your license details here.
+## Apaxy on the document root
+
+The following puppet code will put Apaxy on the root document of a web server, replacing the default web site.
+
+```puppet
+class{'apache':
+  default_vhost     => false,
+  default_ssl_vhost => true,
+}
+include apaxy
+apaxy::theme{'default':
+  manage_vhost => true,
+}
+```
+# Resources
+
+## apaxy
+
+The `apaxy` class uses git to clone a local repository of Apaxy from a repository. An alternative repository or git revision can be specified by parameters.
+
+### Parameters
+
+* *install_dir*: setting this will change where Apaxy is cloned to. The default is to use `/var/opt/apaxy`
+* *source*: setting this will change the source URI used by git to clone Apaxy. The default is to use the [Apaxy Github repository](https://github.com/AdamWhitcroft/Apaxy)
+* *revision*: This can be set to a branch name, tag or commit hash to specify which revision of the Apaxy repository is to be cloned. It defaults to the head of the `master` branch.
+
+## apaxy::theme
+
+The `apaxy::theme` resource copies the clone from the local repository created by the `apaxy` class into a directory of a web site. Currently it applies the apaxy theme by putting a `.htaccess` file into the specified directory. These should really be in the site `vhost.conf` file, but the [Puppetlabs Apache Module](https://github.com/puppetlabs/puppetlabs-apache) is not yet complete enough to do this. Fortunatly, when this changes the module will transparently change this over.
+
+### Parameters
+
+* *docroot*: this is the toplevel root directory where the Apaxy theme is to be installed. The Apaxy theme will apply to this directory and all it's subdirectories. By default it will be applied to the document root specified by the `docroot` of the `apache` class from the [Puppetlabs Apache Module](https://github.com/puppetlabs/puppetlabs-apache), which is OS dependent.
+* *header_source*: Setting this will replace the default `header.html` template with the file from the specified source. This `source` parameter is handled as the [`source` attribute of the puppet `file` resource](http://docs.puppetlabs.com/references/latest/type.html#file-attribute-source).
+* *footer_source*: Setting this will replace the default `footer.html` template with the file from the specified source. This `source` parameter is handled as the [`source` attribute of the puppet `file` resource](http://docs.puppetlabs.com/references/latest/type.html#file-attribute-source).
+* *manage_vhost*: If this is set to true, the `apaxy::theme` resource will create an `apaxy::vhost` which will deploy and enable the Apaxy site.
+
+# Custom vhost
+
+There must be an `AllowOverride all` declaration in  an Apaxy site's `vhost.conf` to enable the Apaxy theme. This should appear in the `<Directory $docroot>` block, where `$docroot` matches what's passed as the *docroot* parameter to `apaxy::theme`. This `vhost.conf` file should be managed by using the `apache::vhost` resource from the [Puppetlabs Apache Module](https://github.com/puppetlabs/puppetlabs-apache). An example `apache::vhost` declaration is given below:
+
+```puppet
+class{'apache':
+  default_vhost     => false,
+  default_ssl_vhost => true,
+}
+include apaxy
+apaxy::theme{'default': }
+apache::vhost { 'default':
+  port            => 80,
+  docroot         => $docroot,
+  access_log_file => 'apaxy_access.log',
+  directories     => [
+    {
+      path           => $docroot,
+      allow_override => ['all'],
+    },
+  ],
+  priority        => '15',
+  require => Apaxy::Theme['default'],
+}
+```
+
+# Dependencies
+
+* [Puppetlabs Apache Module](https://github.com/puppetlabs/puppetlabs-apache)
+* [Puppetlabs vcsrepo Module](https://github.com/puppetlabs/puppetlabs-vcsrepo)
+* [Git](http://git-scm.com/) either install the required packages or use a [Git Puppet Module](https://github.com/nesi/puppet-git)
+
+# To Do
+
+* Remove the need for a `.htaccess` file and incorporate the Apaxy configuration directly into the site `vhost.conf` file. Needs `Alias` and `AliasMatch` directives to be properly implemented into the [Puppetlabs Apache Module](https://github.com/puppetlabs/puppetlabs-apache), see [#483](https://github.com/puppetlabs/puppetlabs-apache/pull/483) and it's corresponding [pull request](https://github.com/puppetlabs/puppetlabs-apache/pull/483).
 
 # Attribution
+
+The puppet-apaxy module was written by Aaron Hicks (2013).
+
+## Apaxy
+
+[Apaxy](http://adamwhitcroft.com/apaxy/) was written and is maintained by [Adam Whitcroft](https://twitter.com/adamwhitcroft).
 
 ## puppet-blank
 
@@ -32,7 +109,7 @@ This will require a copy of the original input files to `spec/fixtures/augeas` u
 
 # Gnu General Public License
 
-[![GPL3](http://www.gnu.org/graphics/gplv3-127x51.png)]](http://www.gnu.org/licenses)
+[![GPL3](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses)
 
 This file is part of the apaxy Puppet module.
 
