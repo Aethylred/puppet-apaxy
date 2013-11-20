@@ -4,69 +4,69 @@ define apaxy::theme (
   $docroot        = $apaxy::params::docroot,
   $header_source  = undef,
   $footer_source  = undef,
-  $directory      = undef,
   $manage_vhost   = undef
 ){
   require apaxy
 
   # docroot in name to ensure resources are unique
 
-  file{"${docroot}_theme":
+  file{"${title}_apaxy_theme_dir":
     ensure  => directory,
     path    => "${docroot}/theme",
     recurse => true,
     replace => false,
     source  => $apaxy::theme_dir,
-    require => File['apaxy_theme_dir'],
+    require => File['apaxy_apaxy_theme_dir'],
   }
 
-  file{"${docroot}_htaccess":
+  file{"${title}_htaccess":
     ensure  => file,
     path    => "${docroot}/.htaccess",
     content => template('apaxy/htaccess.erb'),
-    require => File["${docroot}_theme"],
+    require => File["${title}_apaxy_theme_dir"],
     notify  => Service['httpd'],
     }
 
   if $header_source {
-    file{"${docroot}_header":
+    file{"${title}_header":
       ensure  => file,
       path    => "${docroot}/theme/header.html",
       source  => $header_source,
-      require => File["${docroot}_theme"],
+      require => File["${title}_apaxy_theme_dir"],
     }
   } else {
-    file{"${docroot}_header":
+    file{"${title}_header":
       ensure  => file,
       path    => "${docroot}/theme/header.html",
       content => template('apaxy/header.html.erb'),
-      require => File["${docroot}_theme"],
+      require => File["${title}_apaxy_theme_dir"],
     }
   }
 
   if $footer_source {
-    file{"${docroot}_footer":
+    file{"${title}_footer":
       ensure  => file,
       path    => "${docroot}/theme/footer.html",
       source  => $footer_source,
-      require => File["${docroot}_theme"],
+      require => File["${title}_apaxy_theme_dir"],
     }
   } else {
-    file{"${docroot}_footer":
+    file{"${title}_footer":
       ensure  => file,
       path    => "${docroot}/theme/footer.html",
       content => template('apaxy/footer.html.erb'),
-      require => File["${docroot}_theme"],
+      require => File["${title}_apaxy_theme_dir"],
     }
   }
 
   if $manage_vhost {
-    apache::vhost { 'apaxy':
+    apache::vhost { "apaxy-${title}":
       port            => 80,
       docroot         => $docroot,
       scriptalias     => $apache::scriptalias,
       serveradmin     => $apache::serveradmin,
-      access_log_file => 'apaxy_access.log',
+      access_log_file => "apaxy-${title}_access.log",
+      error_log_file  => "apaxy-${title}_error.log",
       directories     => [
         {
           path           => $docroot,
@@ -74,6 +74,7 @@ define apaxy::theme (
         },
       ],
       priority        => '15',
+      require         => File["${title}_apaxy_theme_dir"],
     }
   }
 
