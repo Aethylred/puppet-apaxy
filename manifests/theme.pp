@@ -1,3 +1,5 @@
+# The apaxy::theme resource deploys the apaxy theme into the
+# documentroot of a HTTP file directory
 define apaxy::theme (
   $docroot        = $apaxy::params::docroot,
   $header_source  = undef,
@@ -64,9 +66,12 @@ define apaxy::theme (
       docroot         => $docroot,
       scriptalias     => $apache::scriptalias,
       serveradmin     => $apache::serveradmin,
-      access_log_file => "apaxy_access.log",
-      directories => [
-        { path => $docroot, allow_override => ['all'] },
+      access_log_file => 'apaxy_access.log',
+      directories     => [
+        {
+          path           => $docroot,
+          allow_override => ['all'],
+        },
       ],
       priority        => '15',
     }
