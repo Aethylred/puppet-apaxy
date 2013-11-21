@@ -1,7 +1,7 @@
 # The apaxy::theme resource deploys the apaxy theme into the
 # documentroot of a HTTP file directory
 define apaxy::theme (
-  $docroot        = $apaxy::params::docroot,
+  $docroot        = $::apache::docroot,
   $header_source  = undef,
   $footer_source  = undef,
   $manage_vhost   = undef
@@ -16,10 +16,10 @@ define apaxy::theme (
     recurse => true,
     replace => false,
     source  => $apaxy::theme_dir,
-    require => File['apaxy_apaxy_theme_dir'],
+    require => File['apaxy_theme_dir'],
   }
 
-  file{"${title}_htaccess":
+  file{"${title}_apaxy_htaccess":
     ensure  => file,
     path    => "${docroot}/.htaccess",
     content => template('apaxy/htaccess.erb'),
@@ -28,14 +28,14 @@ define apaxy::theme (
     }
 
   if $header_source {
-    file{"${title}_header":
+    file{"${title}_apaxy_header":
       ensure  => file,
       path    => "${docroot}/theme/header.html",
       source  => $header_source,
       require => File["${title}_apaxy_theme_dir"],
     }
   } else {
-    file{"${title}_header":
+    file{"${title}_apaxy_header":
       ensure  => file,
       path    => "${docroot}/theme/header.html",
       content => template('apaxy/header.html.erb'),
@@ -44,14 +44,14 @@ define apaxy::theme (
   }
 
   if $footer_source {
-    file{"${title}_footer":
+    file{"${title}_apaxy_footer":
       ensure  => file,
       path    => "${docroot}/theme/footer.html",
       source  => $footer_source,
       require => File["${title}_apaxy_theme_dir"],
     }
   } else {
-    file{"${title}_footer":
+    file{"${title}_apaxy_footer":
       ensure  => file,
       path    => "${docroot}/theme/footer.html",
       content => template('apaxy/footer.html.erb'),
