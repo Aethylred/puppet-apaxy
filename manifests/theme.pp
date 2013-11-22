@@ -74,7 +74,7 @@ define apaxy::theme (
         },
       ],
       priority        => '15',
-      require         => File["${title}_apaxy_theme_dir"],
+      before          => File["${title}_apaxy_theme_dir"],
     }
   }
 
