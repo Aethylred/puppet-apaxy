@@ -69,9 +69,10 @@ define apaxy::theme (
       error_log_file  => "apaxy-${title}_error.log",
       directories     => [
         {
-          path           => $docroot,
-          allow_override => ['all'],
-        },
+          path            => $docroot,
+          allow_override  => ['all'],
+          directoryindex  => 'disabled',
+        },  
       ],
       priority        => '15',
       before          => File["${title}_apaxy_theme_dir"],
