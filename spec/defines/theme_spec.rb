@@ -88,17 +88,46 @@ describe 'apaxy::theme', :type => :define do
         'require' => 'File[rspec_apaxy_theme_dir]'
       ) }
     end
+    describe 'with custom $header_fragment' do
+      let :params do
+        {
+          :header_fragment => 'Inserted into header',
+        }
+      end
+      it { should contain_file('rspec_apaxy_header').with(
+        'ensure'  => 'file',
+        'path'    => '/var/www/theme/header.html',
+        'require' => 'File[rspec_apaxy_theme_dir]'
+      ) }
+      it { should contain_file('rspec_apaxy_header').with_content(
+        /-->$\n^Inserted into header$\Z/
+      ) }
+    end
     describe 'with $footer_source => puppet:///some/other/path' do
       let :params do
         {
           :footer_source => 'puppet:///some/other/path',
         }
       end
-      it { should contain_file('rspec_apaxy_footer').with(
-        'ensure'  => 'file',
-        'path'    => '/var/www/theme/footer.html',
-        'source'  => 'puppet:///some/other/path',
-        'require' => 'File[rspec_apaxy_theme_dir]'
+    end
+    describe 'with custom $footer_fragment' do
+      let :params do
+        {
+          :footer_fragment => 'Inserted into footer',
+        }
+      end
+      it { should contain_file('rspec_apaxy_footer').with_content(
+        /"block">$\n^Inserted into footer$\n^  <\/div>/
+      ) }
+    end
+    describe 'with additional $attribution' do
+      let :params do
+        {
+          :attribution => 'Inserted into attribution',
+        }
+      end
+      it { should contain_file('rspec_apaxy_footer').with_content(
+        /-->$\n^<p>Inserted into attribution<\/p>$\n^  <p>This/
       ) }
     end
     describe 'with $manage_vhost => true' do

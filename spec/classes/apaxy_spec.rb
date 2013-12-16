@@ -13,7 +13,7 @@ describe 'apaxy', :type => :class do
             "include apache"
     end
     describe "with no parameters" do
-      it { should include_class('apaxy::params') }
+      it { should contain_class('apaxy::params') }
       it { should contain_vcsrepo('apaxy').with(
         'ensure'    => 'present',
         'provider'  => 'git',
@@ -98,7 +98,7 @@ describe 'apaxy', :type => :class do
       }
     end
     describe "with no parameters" do
-      it { should include_class('apaxy::params') }
+      it { should contain_class('apaxy::params') }
     end
   end
 
@@ -114,7 +114,7 @@ describe 'apaxy', :type => :class do
     # The Apache class fails first.
     # it do
     #   expect {
-    #     should include_class('puppet::params')
+    #     should contain_class('puppet::params')
     #   }.to raise_error(Puppet::Error, /The apaxy class is not configured for Unknown distributions./)
     # end
   end

@@ -1,12 +1,22 @@
 # The apaxy::theme resource deploys the apaxy theme into the
 # documentroot of a HTTP file directory
 define apaxy::theme (
-  $docroot        = $::apache::docroot,
-  $header_source  = undef,
-  $footer_source  = undef,
-  $manage_vhost   = undef
+  $docroot          = $::apache::docroot,
+  $header_source    = undef,
+  $header_fragment  = undef,
+  $footer_source    = undef,
+  $footer_fragment  = undef,
+  $attribution      = undef,
+  $manage_vhost     = undef
 ){
   require apaxy
+
+  if $header_source and $header_fragment{
+    err('setting the header_source parameter overrides the header_fragmetn parameter')
+  }
+  if $footer_source and $footer_fragment{
+    err('setting the footer_source parameter overrides the footer_fragmetn parameter')
+  }
 
   # docroot in name to ensure resources are unique
 
@@ -72,7 +82,7 @@ define apaxy::theme (
           path            => $docroot,
           allow_override  => ['all'],
           directoryindex  => 'disabled',
-        },  
+        },
       ],
       priority        => '15',
       before          => File["${title}_apaxy_theme_dir"],

@@ -33,7 +33,7 @@ RSpec.configure do |c|
     else
       stdlib_ver = '4.1.0'
     end
-
+    print("puppetlabs-stdlib set to version #{(stdlib_ver)}")
     shell("puppet module install puppetlabs-stdlib --version #{stdlib_ver}")
   end
 end

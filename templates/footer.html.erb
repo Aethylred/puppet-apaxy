@@ -1,10 +1,17 @@
   <div class="block">
+<% if @footer_fragment -%>
+<%= @footer_fragment %>
+<% else -%>
     You can add your own HTML above or below the directory listing. Simply explore the <code>header.html</code> and <code>footer.html</code> files.
+<% end -%>
   </div><!--/.postlisting-->
 
 </div><!--/.wrapper-->
 
 <div class="footer"><!--please retain accreditation-->
+<% if @attribution -%>
+<p><%= @attribution %></p>
+<% end -%>
   <p>This Apaxy instance is managed by <a href="http://puppetlabs.com/puppet/enterprise-vs-open-source">Puppet</a> using the <a href="https://github.com/Aethylred/puppet-apaxy">Apaxy Puppet Module</a> written by <a href="https://twitter.com/Aethylred">@Aethylred</a>, changes to the server may be overwritten.</p>
   <p><a href="http://adamwhitcroft.com/apaxy/">Apaxy</a> by <a href="https://twitter.com/adamwhitcroft">@adamwhitcroft</a></p>
 </div><!--/.footer-->
