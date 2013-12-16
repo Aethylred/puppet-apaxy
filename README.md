@@ -40,7 +40,10 @@ The `apaxy::theme` resource copies the clone from the local repository created b
 
 * *docroot*: this is the toplevel root directory where the Apaxy theme is to be installed. The Apaxy theme will apply to this directory and all it's subdirectories. By default it will be applied to the document root specified by the `docroot` of the `apache` class from the [Puppetlabs Apache Module](https://github.com/puppetlabs/puppetlabs-apache), which is OS dependent.
 * *header_source*: Setting this will replace the default `header.html` template with the file from the specified source. This `source` parameter is handled as the [`source` attribute of the puppet `file` resource](http://docs.puppetlabs.com/references/latest/type.html#file-attribute-source).
+* *header_fragment*: Inserts a string into the header. Should be formatted with HTML. The default is to not insert anthing. 
 * *footer_source*: Setting this will replace the default `footer.html` template with the file from the specified source. This `source` parameter is handled as the [`source` attribute of the puppet `file` resource](http://docs.puppetlabs.com/references/latest/type.html#file-attribute-source).
+* *footer_fragment*: Inserts a string into the footer. Should be formatted with HTML. The default is not to insert anything.
+* *attribution*: Inserts an additional attribution string into the footer. Should be formatted with HTML. Hardcoded to be inserted in paragraph block tags. Default is not to insert anything.
 * *manage_vhost*: If this is set to true, the `apaxy::theme` resource will create an `apaxy::vhost` which will deploy and enable the Apaxy site.
 
 # Custom vhost

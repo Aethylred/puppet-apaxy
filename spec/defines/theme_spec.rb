@@ -144,11 +144,12 @@ describe 'apaxy::theme', :type => :define do
         'access_log_file' => 'apaxy-rspec_access.log',
         'error_log_file'  => 'apaxy-rspec_error.log',
         'priority'        => '15',
-        'require'         => 'File[rspec_apaxy_theme_dir]'
+        'before'          => 'File[rspec_apaxy_theme_dir]'
       ) }
       it { should contain_apache__vhost('apaxy-rspec').with_directories(
         'path'            => '/var/www',
-        'allow_override'  => ['all']
+        'allow_override'  => ['all'],
+        'directoryindex'  => 'disabled'
       ) }
     end
   end
